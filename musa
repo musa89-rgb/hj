@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktif: Pengenalan Photoshop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1, h2 {
+            color: #007acc;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #007acc;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #005a99;
+        }
+        #demo {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e9f7ff;
+            border-left: 5px solid #007acc;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pengenalan Interaktif tentang Adobe Photoshop</h1>
+    <p>Adobe Photoshop adalah perangkat lunak editing gambar yang kuat, digunakan untuk desain grafis, fotografi, dan seni digital. Klik tombol di bawah untuk menjelajahi fitur utamanya!</p>
+
+    <div class="section">
+        <h2>Apa itu Photoshop?</h2>
+        <p>Photoshop adalah alat utama untuk manipulasi gambar. Dibuat oleh Adobe, ia memungkinkan pengguna untuk mengedit foto, membuat desain, dan banyak lagi.</p>
+        <button onclick="toggleSection('intro')">Pelajari Lebih Lanjut</button>
+        <div id="intro" class="hidden">
+            <p>Dirilis pertama kali pada 1990, Photoshop telah menjadi standar industri untuk desainer dan fotografer. Versi terbaru menawarkan AI untuk otomatisasi tugas seperti penghapusan objek atau peningkatan resolusi.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Fitur Utama</h2>
+        <ul>
+            <li><strong>Layers:</strong> Susun elemen gambar seperti lapisan kue.</li>
+            <li><strong>Tools:</strong> Brush, Clone Stamp, dan lainnya untuk editing.</li>
+            <li><strong>Filters:</strong> Efek seperti blur atau sharpen.</li>
+        </ul>
+        <button onclick="toggleSection('features')">Lihat Demo Sederhana</button>
+        <div id="features" class="hidden">
+            <p>Demo: Klik canvas di bawah untuk "menggambar" dengan brush sederhana (simulasi).</p>
+            <canvas id="canvas" width="400" height="200"></canvas>
+            <button onclick="clearCanvas()">Hapus Canvas</button>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Tips Penggunaan</h2>
+        <p>Gunakan shortcut seperti Ctrl+Z untuk undo, atau Ctrl+S untuk simpan.</p>
+        <button onclick="toggleSection('tips')">Tips Lanjutan</button>
+        <div id="tips" class="hidden">
+            <p>Untuk pemula: Mulai dengan Adjustment Layers untuk mengubah warna tanpa merusak asli. Untuk profesional: Manfaatkan Smart Objects untuk editing non-destruktif.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(id) {
+            const element = document.getElementById(id);
+            element.style.display = element.style.display === 'block' ? 'none' : 'block';
+        }
+
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let drawing = false;
+
+        canvas.addEventListener('mousedown', () => drawing = true);
+        canvas.addEventListener('mouseup', () => drawing = false);
+        canvas.addEventListener('mousemove', draw);
+
+        function draw(event) {
+            if (!drawing) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            ctx.fillStyle = '#007acc';
+            ctx.beginPath();
+            ctx.arc(x, y, 5, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    </script>
+</body>
+</html>
